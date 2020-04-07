@@ -4,6 +4,8 @@ namespace Chumper\Zipper\Repositories;
 
 use Exception;
 use Mockery;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use PHPUnit\Framework\TestCase;
 use ZipArchive;
 
 /**
@@ -13,8 +15,10 @@ use ZipArchive;
  * Time: 20:57
  * To change this template use File | Settings | File Templates.
  */
-class ZipRepositoryTest extends \PHPUnit_Framework_TestCase
+class ZipRepositoryTest extends TestCase
 {
+    use MockeryPHPUnitIntegration;
+
     /**
      * @var ZipRepository
      */
@@ -25,15 +29,10 @@ class ZipRepositoryTest extends \PHPUnit_Framework_TestCase
      */
     public $mock;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->mock = Mockery::mock(new ZipArchive());
         $this->zip = new ZipRepository('foo', true, $this->mock);
-    }
-
-    protected function tearDown()
-    {
-        Mockery::close();
     }
 
     public function testMake()
@@ -52,8 +51,8 @@ class ZipRepositoryTest extends \PHPUnit_Framework_TestCase
     public function testOpenNonZipThrowsException()
     {
         $this->expectException(Exception::class);
-        $this->expectExceptionMessageRegExp('/Error: Failed to open (.*)ZipRepositoryTest.php! Error: ZipArchive::ER_NOZIP - Not a zip archive./');
-        new ZipRepository(__DIR__.DIRECTORY_SEPARATOR.'ZipRepositoryTest.php', false);
+        $this->expectExceptionMessageMatches('/Error: Failed to open (.*)ZipRepositoryTest.php! Error: ZipArchive::ER_NOZIP - Not a zip archive./');
+        new ZipRepository(__DIR__ . DIRECTORY_SEPARATOR . 'ZipRepositoryTest.php', false);
     }
 
     public function testAddFile()
@@ -111,6 +110,8 @@ class ZipRepositoryTest extends \PHPUnit_Framework_TestCase
 
     public function testClose()
     {
+        $this->mock->shouldReceive('close')->once()
+            ->withNoArgs()->andReturn(true);
         $this->zip->close();
     }
 }
