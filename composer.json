@@ -1,7 +1,7 @@
 {
     "name": "monyxie/zipper",
     "type": "library",
-    "description": "This is a little neat helper for the ZipArchive methods with handy functions",
+    "description": "Drop-in replacement for Chumper/Zipper with Laravel 6.x support.",
     "keywords": ["laravel", "ZIP", "Archive"],
     "homepage": "http://github.com/monyxie/zipper",
     "license": "Apache2",
@@ -10,7 +10,7 @@
             "name": "Nils Plaschke",
             "email": "github@nilsplaschke.de",
             "homepage": "http://nilsplaschke.de",
-            "role": "Developer"
+            "role": "Original Developer"
         },
         {
             "name": "monyxie",
@@ -50,6 +50,9 @@
                 "Zipper": "Chumper\\Zipper\\Zipper"
             }
         }
+    },
+    "replace": {
+        "chumper/zipper": "1.0.3"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
