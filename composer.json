@@ -51,9 +51,6 @@
             }
         }
     },
-    "replace": {
-        "chumper/zipper": "1.0.3"
-    },
     "minimum-stability": "dev",
     "prefer-stable": true
 }
